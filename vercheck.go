@@ -17,7 +17,7 @@ import (
 
 // check if its a http url, otherwise read from filesystem.
 
-func VerArr(v string) []int {
+func verArr(v string) []int {
 	var err error
 	ver := []int{0, 0, 0}
 	split := strings.Split(v, ".")
@@ -30,8 +30,8 @@ func VerArr(v string) []int {
 	return ver
 }
 
-func CompareVer(v1, v2 string, l int) bool {
-	v1a, v2a := VerArr(v1), VerArr(v2)
+func compareVer(v1, v2 string, l int) bool {
+	v1a, v2a := verArr(v1), verArr(v2)
 
 	if l == 0 {
 		l = len(v1a)
@@ -91,13 +91,13 @@ func getVersion(us string) string {
 
 // this will even get a patch update ex: 1.2.3 - 1.2.4
 func HasUpdate(rem, loc string) bool {
-	return CompareVer(getVersion(rem), getVersion(loc), 0)
+	return compareVer(getVersion(rem), getVersion(loc), 0)
 }
 
 func HasMinorUpdate(rem, loc string) bool {
-	return CompareVer(getVersion(rem), getVersion(loc), 2)
+	return compareVer(getVersion(rem), getVersion(loc), 2)
 }
 
 func HasMajorUpdate(rem, loc string) bool {
-	return CompareVer(getVersion(rem), getVersion(loc), 1)
+	return compareVer(getVersion(rem), getVersion(loc), 1)
 }
