@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -46,6 +47,11 @@ func CompareVer(v1, v2 string, l int) bool {
 	return false
 }
 
+func isSemVer(v string) bool {
+	r, _ := regexp.Compile(`\d\.\d\.\d`)
+	return r.MatchString(v)
+}
+
 func getVersionFile(u string) string {
 	ver, err := ioutil.ReadFile(u)
 	if err != nil {
@@ -77,6 +83,8 @@ func getVersion(us string) string {
 
 	if u.IsAbs() {
 		return getVersionURL(us)
+	} else if isSemVer(us) {
+		return us
 	}
 	return getVersionFile(us)
 }
